@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import scipy
+from scipy.stats import linregress
 
 # X = np.linspace(-2*np.pi, 2*np.pi, 1024)
 # C, S = np.cos(X) , np.sin(X)
@@ -10,167 +11,54 @@ import scipy
 # plt.plot(X, S)
 # plt.show()
 
-
-with open("BrewstervinkelData.txt", "r") as data:
+   
+with open("fransarData.txt", "r") as data:
   xlist = []
   ylist = []
-  for line in data: 
-    line = line.split(",")
-    xlist.append(int(line[0].strip()))
-    ylist.append(float(line[1].strip()))
-   
+  lol = 0
+  for line in data:
+    ylist.append(int(line.strip()))
+    # xlist.append(lol)
+    # lol += 1
 
 
-# X = np.linspace(0,90,1024)
 
-plt.plot(xlist, ylist,'bo')
+
+def AverageData():
+  avList= []
+  minimum_value = ylist.index(np.min(ylist))
+  # print(ylist[:minimum_value+1])
+  # print(ylist[minimum_value:])
+  lower = ylist[:minimum_value+1]
+  higher = ylist[minimum_value:]
+  higher.reverse()
+  for i in range(len(ylist[:minimum_value])):
+    avdata =(lower[i]+ higher[i])/2
+    avList.append(avdata)
+  return avList
+
+avList =AverageData()
+
+def linRegression(x,y):
+  print(linregress(x,y))
+
+
+
+
+  
+
+X = np.linspace(0,len(avList),len(avList))
+linRegression(X,avList)
+fig, ax = plt.subplots()
+ax.plot(X,avList, "bo")
+
+ax.set(xlabel='Antal fransar', ylabel='Tryck (Pa)',
+       title='Antal fransar som passerar en punkt gentemot tryck')
 plt.show()
 
 
-1000
-980
-972
-959
-946
-932
-914
-902
-890
-877
-862
-850
-838
-823
-807
-796
-783
-771
-758
-745
-732
-719
-705
-690
-
-
-679
-665
-650
-638
-626
-613
-600
-588
-574
-560
-549
-536
-523
-510
-496
-483
-470
-456
-444
-430
-417
-405
-390
 
 
 
-378
-364
-350
-339
-325
-311
-298
-286
-271
-258
-245
-232
-220
-206
-192
-179
-166
-153
-140
-126
-113
-100
-110
-123
-
-137
-152
-164
-176
-192
-205
-219
-233
-245
-258
-272
-286
-299
-311
-324
-340
-355
-368
-378
-394
-407
-420
-447
-460
-
-
-
-464
-492
-496
-509
-522
-535
-547
-563
-576
-590
-601
-612
-629
-640
-655
-666
-680
-693
-710
-722
-735
-750
-762
-777
-787
-800
-815
-825
-836
-848
-862
-876
-889
-904
-917
-929
-945
-958
-974
-980
-989
-995
+  
 
